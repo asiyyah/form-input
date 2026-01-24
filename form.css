@@ -11,6 +11,8 @@
     --color-text-secondary: #6B7280;
     --color-border: #E5E7EB;
     --color-input-bg: #FFFFFF;
+    --color-error: #EC221F;
+    --color-success: #19BC7E;
     --color-link: #128CBA;
     --color-info-bg: #128CBA; /* Right side background */
     --color-text-invert: #FFFFFF;
@@ -187,6 +189,14 @@ input:focus {
     box-shadow: 0 0 0 3px rgba(18, 140, 186, 0.1);
 }
 
+input.valid {
+    border-color: var(--color-success);
+}
+
+input.invalid {
+    border-color: var(--color-error);
+}
+
 /* Validation Checklist */
 .validation-checklist {
     margin-bottom: var(--spacing-xl);
@@ -215,6 +225,14 @@ input:focus {
     background: white;
     flex-shrink: 0;
 }
+
+.req.ok {
+    color: var(--color-success);
+}
+
+.req.not-ok {
+    color: var(--color-error);
+}   
 
 /* Primary Button */
 .btn-primary {
