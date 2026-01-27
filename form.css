@@ -225,6 +225,22 @@ input.invalid {
     border-radius: 4px;
     background: white;
     flex-shrink: 0;
+    transition: all 0.2s ease;
+    background-position: center;
+    background-repeat: no-repeat;
+    background-size: 10px;
+}
+
+.checkbox.valid {
+    background-color: var(--color-success);
+    border-color: var(--color-success);
+    background-image: url("data:image/svg+xml,%3Csvg width='10' height='8' viewBox='0 0 10 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1.5 4L3.83333 6.33333L8.5 1.66667' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
+}
+
+.checkbox.invalid {
+    background-color: var(--color-error);
+    border-color: var(--color-error);
+    background-image: url("data:image/svg+xml,%3Csvg width='8' height='8' viewBox='0 0 8 8' fill='none' xmlns='http://www.w3.org/2000/svg'%3E%3Cpath d='M1 1L7 7M7 1L1 7' stroke='white' stroke-width='1.5' stroke-linecap='round' stroke-linejoin='round'/%3E%3C/svg%3E");
 }
 
 .req.ok {

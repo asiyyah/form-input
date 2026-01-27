@@ -15,7 +15,20 @@ const lengthCheck = document.getElementById('length-check');
 const uppercaseCheck = document.getElementById('uppercase-check');
 const lowercaseCheck = document.getElementById('lowercase-check');
 const numberCheck = document.getElementById('number-check');
+const specialCheck = document.getElementById('special-check');
 const reqList = document.querySelectorAll('.req');
+
+// Helper to update requirement UI (text and checkbox)
+function updateRequirement(element, isValid) {
+    const checkbox = element.previousElementSibling;
+    if (isValid) {
+        element.className = "req ok";
+        if (checkbox) checkbox.className = "checkbox valid";
+    } else {
+        element.className = "req not-ok"; 
+        if (checkbox) checkbox.className = "checkbox invalid";
+    }
+}
 
 
 
@@ -138,50 +151,56 @@ function hasNumber(text){
 //     return false;
 // }
 
+// Special Character helper function
+function hasSpecial(text){
+    const specialChars = "!@#$%^&*()_+-=[]{}|;':\",./<>?";
+    for(let char of text){
+        if (specialChars.includes(char)){
+            return true;
+        }
+    }
+    return false;
+}
+
 // Check Password Value
 function checkPassword(){
     let passwordValue = passwordInput.value;
 
     // Check for length
-    if(passwordValue.length >= 8){
-        lengthCheck.className = "req ok";
-    }
-    else{
-        lengthCheck.className = "req";
-    }
+    updateRequirement(lengthCheck, passwordValue.length >= 8);
 
     // Check for uppercase
-    if(hasUppercase(passwordValue)){
-        uppercaseCheck.className = "req ok";
-    }
-    else{
-        uppercaseCheck.className = "req";
-    }
+    updateRequirement(uppercaseCheck, hasUppercase(passwordValue));
 
     // Check for lowercase
-    if(hasLowercase(passwordValue)){
-        lowercaseCheck.className = "req ok";
-    }
-    else{
-        lowercaseCheck.className = "req";
-    }
+    updateRequirement(lowercaseCheck, hasLowercase(passwordValue));
 
     // Check for number
-    let numberValid = false;
-    if(hasNumber(passwordValue)){
-        numberCheck.className = "req ok";
-        numberValid = true;
-    }
-    else{
-        numberCheck.className = "req";
-        numberValid = false;
-    }
+    const isNumberValid = hasNumber(passwordValue);
+    updateRequirement(numberCheck, isNumberValid);
 
-    // Return overall password validity
-    return (passwordValue.length >= 8) && 
+    // Check for special character
+    const isSpecialValid = hasSpecial(passwordValue);
+    updateRequirement(specialCheck, isSpecialValid);
+
+    // Calculate overall validity
+    const isValid = (passwordValue.length >= 8) && 
            hasUppercase(passwordValue) && 
            hasLowercase(passwordValue) && 
-           numberValid;
+           isNumberValid &&
+           isSpecialValid;
+
+    // Update Input UI
+    if(isValid) {
+        passwordInput.className = "valid";
+        passwordError.textContent = ""; 
+    } else {
+        passwordInput.className = "invalid";
+        // Optional: We could add a generic error message here, similar to other fields
+        // passwordError.textContent = "Password does not meet all requirements";
+    }
+
+    return isValid;
 }
 
 // Confirm Password Validation Process:
@@ -233,7 +252,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 formMsg.style.color = "green";
                 // form.submit(); // Uncomment if real submission is needed
             } else {
-                formMsg.textContent = "Please fix the errors above.";
+                formMsg.textContent = "Please fill in all required fields";
                 formMsg.style.color = "red";
             }
         });
