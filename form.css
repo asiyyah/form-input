@@ -9,6 +9,7 @@
     --color-bg-white: #FFFFFF;
     --color-text-main: #111827;
     --color-text-secondary: #6B7280;
+    --color-text-grey: #414040;
     --color-border: #E5E7EB;
     --color-input-bg: #FFFFFF;
     --color-error: #EC221F;
@@ -213,7 +214,7 @@ input.invalid {
     display: flex;
     align-items: center;
     gap: var(--spacing-sm);
-    color: var(--color-text-secondary);
+    color: var(--color-text-grey);
     font-size: 13px;
 }
 
@@ -252,6 +253,12 @@ input.invalid {
 .btn-primary:hover {
     background-color: var(--color-primary-hover);
 }
+
+.btn-primary:disabled {
+    background-color: var(--color-primary);
+    opacity: 0.5;   
+    cursor: not-allowed;
+}   
 
 /* Divider */
 .divider {
